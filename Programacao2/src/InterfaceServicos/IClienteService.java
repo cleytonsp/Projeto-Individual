@@ -10,5 +10,5 @@ public interface IClienteService {
     void atualizar(Cliente cliente);
     void remover(int id);
     void remover(String nome);
-    List<Cliente> listar(); // Certifique-se de que esse método está aqui
+    List<Cliente> listar(); 
 }

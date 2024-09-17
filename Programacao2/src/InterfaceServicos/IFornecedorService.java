@@ -10,5 +10,5 @@ public interface IFornecedorService {
     void atualizar(Fornecedor fornecedor);
     boolean remover(int id);
     void remover(String nome);
-    List<Fornecedor> listarFornecedores(); // Método correto
+    List<Fornecedor> listarFornecedores(); 
 }

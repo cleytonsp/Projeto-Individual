@@ -73,7 +73,7 @@ public class FornecedorService {
         return fornecedorRepository.listarTodos();
     }
 
-    // Métodos para acessar a pilha e fila (opcional)
+   
     public String verUltimaOperacao() {
         return stackUtil.peek();
     }
@@ -83,11 +83,11 @@ public class FornecedorService {
     }
 
     private boolean isValidCnpj(String cnpj) {
-        // Implementação de validação do CNPJ
+   
         if (cnpj == null || cnpj.isEmpty()) {
             return false;
         }
-        // Adicione aqui a lógica real de validação do CNPJ
-        return true; // Placeholder para validação real
+       
+        return true; 
     }
 }

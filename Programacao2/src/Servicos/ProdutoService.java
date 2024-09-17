@@ -19,7 +19,6 @@ public class ProdutoService {
     }
 
     public void cadastrar(Produto produto) {
-        // Validação simples
         if (produto.getNome() == null || produto.getNome().isEmpty()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
         }
@@ -41,7 +40,6 @@ public class ProdutoService {
     }
 
     public void atualizar(Produto produto) {
-        // Validação simples
         if (produto.getNome() == null || produto.getNome().isEmpty()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
         }
@@ -69,7 +67,6 @@ public class ProdutoService {
         return produtoRepository.listarTodos();
     }
 
-    // Novo método para buscar produto na fila
     public Produto buscarProdutoNaFila(int id) {
         return produtoRepository.buscarProdutoNaFila(id);
     }

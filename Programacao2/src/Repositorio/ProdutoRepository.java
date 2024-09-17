@@ -10,7 +10,6 @@ public class ProdutoRepository {
     private List<Produto> produtos = new ArrayList<>();
     private Queue<Produto> filaDeProdutos = new LinkedList<>();
 
-    // Métodos para gerenciamento de produtos
     public void adicionar(Produto produto) {
         produtos.add(produto);
     }
@@ -51,14 +50,14 @@ public class ProdutoRepository {
         return -1;
     }
 
-    // Métodos para gerenciamento da fila de produtos
+
     public void adicionarProdutoNaFila(Produto produto) {
         filaDeProdutos.add(produto);
         System.out.println("Produto " + produto.getNome() + " adicionado à fila.");
     }
 
     public Produto removerProdutoDaFila() {
-        Produto produtoRemovido = filaDeProdutos.poll(); // poll() retorna e remove o primeiro item da fila ou null se estiver vazia
+        Produto produtoRemovido = filaDeProdutos.poll(); 
         if (produtoRemovido != null) {
             System.out.println("Produto " + produtoRemovido.getNome() + " removido da fila.");
         } else {
@@ -68,7 +67,7 @@ public class ProdutoRepository {
     }
 
     public Produto verProximoProdutoNaFila() {
-        Produto proximoProduto = filaDeProdutos.peek(); // peek() retorna o primeiro item da fila sem removê-lo ou null se estiver vazia
+        Produto proximoProduto = filaDeProdutos.peek(); 
         if (proximoProduto != null) {
             System.out.println("Próximo produto na fila: " + proximoProduto.getNome());
         } else {
@@ -88,7 +87,6 @@ public class ProdutoRepository {
         }
     }
 
-    // Método para buscar um produto na fila por ID
     public Produto buscarProdutoNaFila(int id) {
         for (Produto produto : filaDeProdutos) {
             if (produto.getId() == id) {

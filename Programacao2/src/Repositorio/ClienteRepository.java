@@ -51,7 +51,7 @@ public class ClienteRepository {
     }
 
     public List<Cliente> listarTodos() {
-        return new ArrayList<>(clientes); // Retorna uma nova lista para evitar modificações externas
+        return new ArrayList<>(clientes); 
     }
 
     private int encontrarIndiceClientePorId(int id) {
