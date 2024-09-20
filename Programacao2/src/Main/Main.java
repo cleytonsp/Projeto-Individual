@@ -71,46 +71,45 @@ public class Main {
         System.out.println("3. Listar Produtos");
         System.out.println("4. Remover Produto");
         System.out.println("5. Buscar Produto na Fila");
+        System.out.println("6. Adicionar Produto na Fila");
+        System.out.println("7. Remover Produto da Fila");
+        System.out.println("8. Ver Próximo Produto na Fila");
+        System.out.println("9. Exibir Todos os Produtos na Fila");
+        System.out.println("0. Voltar ao menu principal");
 
         int opcao = scanner.nextInt();
         scanner.nextLine(); 
 
         switch (opcao) {
             case 1:
-               
                 System.out.println("Nome:");
                 String nome = scanner.nextLine();
-                System.out.println("ID:");
-                int id = scanner.nextInt();
                 System.out.println("Preço:");
                 double preco = scanner.nextDouble();
                 System.out.println("Quantidade de Estoque:");
                 int estoque = scanner.nextInt();
-                scanner.nextLine(); 
+                scanner.nextLine();
                 System.out.println("Fornecedor (nome):");
                 String nomeFornecedor = scanner.nextLine();
 
-               
                 Fornecedor fornecedor = fornecedorService.buscar(nomeFornecedor);
                 if (fornecedor == null) {
                     System.out.println("Fornecedor não encontrado. Cadastrar fornecedor primeiro.");
                     break;
                 }
 
-               
                 System.out.println("Tipo do produto (1 para Físico, 2 para Digital):");
                 int tipo = scanner.nextInt();
                 scanner.nextLine(); 
                 EnumProdutoTipo produtoTipo = (tipo == 1) ? EnumProdutoTipo.PRODUTO_FISICO : EnumProdutoTipo.PRODUTO_DIGITAL;
 
-                
-                Produto produto = new Produto(id, nome, preco, estoque, fornecedor, produtoTipo);
+                Produto produto = new Produto(nome, preco, estoque, fornecedor, produtoTipo);
                 produtoService.cadastrar(produto);
                 System.out.println("Produto cadastrado com sucesso.");
                 break;
 
             case 2:
-               
+
                 System.out.print("ID do produto para atualizar: ");
                 int idAtualizar = scanner.nextInt();
                 scanner.nextLine(); 
@@ -135,7 +134,6 @@ public class Main {
                 break;
 
             case 3:
-               
                 System.out.println("Listando todos os produtos:");
                 List<Produto> produtos = produtoService.listarProdutos();
                 for (Produto p : produtos) {
@@ -144,7 +142,6 @@ public class Main {
                 break;
 
             case 4:
-               
                 System.out.print("ID do produto para remover: ");
                 int idRemover = scanner.nextInt();
                 scanner.nextLine(); 
@@ -154,7 +151,6 @@ public class Main {
                 break;
 
             case 5:
-                
                 System.out.print("ID do produto para buscar na fila: ");
                 int idBuscarFila = scanner.nextInt();
                 scanner.nextLine(); 
@@ -167,41 +163,74 @@ public class Main {
                 }
                 break;
 
+            case 6:
+                System.out.print("ID do produto para adicionar na fila: ");
+                int idAdicionarFila = scanner.nextInt();
+                scanner.nextLine(); 
+
+                Produto produtoParaFila = produtoService.buscar(idAdicionarFila);
+                if (produtoParaFila != null) {
+                    produtoRepository.adicionarProdutoNaFila(produtoParaFila);
+                } else {
+                    System.out.println("Produto não encontrado!");
+                }
+                break;
+
+            case 7:
+                Produto produtoRemovido = produtoRepository.removerProdutoDaFila();
+                if (produtoRemovido != null) {
+                    System.out.println("Produto removido da fila: " + produtoRemovido.getNome());
+                }
+                break;
+
+            case 8:
+                Produto proximoProduto = produtoRepository.verProximoProdutoNaFila();
+                if (proximoProduto != null) {
+                    System.out.println("Próximo produto na fila: " + proximoProduto.getNome());
+                }
+                break;
+
+            case 9:
+                produtoRepository.exibirFilaDeProdutos();
+                break;
+
+            case 0:
+                return;
+
             default:
                 System.out.println("Opção inválida!");
                 break;
         }
     }
 
-    private static void gerenciarFornecedores() {
-        System.out.println("1. Cadastrar Fornecedor");
-        System.out.println("2. Atualizar Fornecedor");
-        System.out.println("3. Buscar Fornecedor");
-        System.out.println("4. Listar Fornecedores");
-        System.out.println("5. Remover Fornecedor");
+        private static void gerenciarFornecedores() {
+            System.out.println("1. Cadastrar Fornecedor");
+            System.out.println("2. Atualizar Fornecedor");
+            System.out.println("3. Buscar Fornecedor");
+            System.out.println("4. Listar Fornecedores");
+            System.out.println("5. Remover Fornecedor");
+            System.out.println("0. Voltar ao menu principal");
+            
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); 
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine(); 
+            switch (opcao) {
+                case 1:
+                  
+                    System.out.println("Nome:");
+                    String nome = scanner.nextLine();
+                    System.out.println("CNPJ: ");
+                    String cnpj = scanner.nextLine();
+                    System.out.println("Contato: ");
+                    String contato = scanner.nextLine();
+                    System.out.println("Endereço: ");
+                    String endereco = scanner.nextLine();
 
-        switch (opcao) {
-            case 1:
-                
-                System.out.println("Nome:");
-                String nome = scanner.nextLine();
-                System.out.println("ID: ");
-                int id = scanner.nextInt();
-                System.out.println("CNPJ: ");
-                scanner.nextLine(); 
-                String cnpj = scanner.nextLine();
-                System.out.println("Contato: ");
-                String contato = scanner.nextLine();
-                System.out.println("Endereço: ");
-                String endereco = scanner.nextLine();
-
-                Fornecedor fornecedor = new Fornecedor(id, nome, cnpj, contato, endereco);
-                fornecedorService.cadastrar(fornecedor);
-                System.out.println("Fornecedor cadastrado com sucesso.");
-                break;
+                  
+                    Fornecedor fornecedor = new Fornecedor(nome, cnpj, contato, endereco);
+                    fornecedorService.cadastrar(fornecedor);
+                    System.out.println("Fornecedor cadastrado com sucesso.");
+                    break;
 
             case 2:
                 
@@ -266,6 +295,9 @@ public class Main {
                 fornecedorService.remover(idRemover);
                 System.out.println("Fornecedor removido com sucesso.");
                 break;
+                
+            case 0: 
+                return;
 
             default:
                 System.out.println("Opção inválida!");
@@ -279,26 +311,25 @@ public class Main {
         System.out.println("3. Buscar Cliente");
         System.out.println("4. Listar Clientes");
         System.out.println("5. Remover Cliente");
-
+        System.out.println("0. Voltar ao menu principal");
+        
         int opcao = scanner.nextInt();
         scanner.nextLine(); 
 
         switch (opcao) {
             case 1:
-                
+               
                 System.out.println("Nome:");
                 String nome = scanner.nextLine();
-                System.out.println("ID: ");
-                int id = scanner.nextInt();
                 System.out.println("CNPJ: ");
-                scanner.nextLine(); 
                 String cnpj = scanner.nextLine();
                 System.out.println("Endereço: ");
                 String endereco = scanner.nextLine();
                 System.out.println("Contato: ");
                 String contato = scanner.nextLine();
 
-                Cliente cliente = new Cliente(id, nome, cnpj, contato, endereco);
+             
+                Cliente cliente = new Cliente(nome, cnpj, contato, endereco);
                 clienteService.cadastrar(cliente);
                 System.out.println("Cliente cadastrado com sucesso.");
                 break;
@@ -361,6 +392,9 @@ public class Main {
                 clienteService.remover(idRemover);
                 System.out.println("Cliente removido com sucesso.");
                 break;
+                
+            case 0: 
+                return; 
 
             default:
                 System.out.println("Opção inválida!");

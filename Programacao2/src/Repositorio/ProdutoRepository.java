@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
 import Entidades.Produto;
 
 public class ProdutoRepository {
@@ -12,6 +13,8 @@ public class ProdutoRepository {
 
     public void adicionar(Produto produto) {
         produtos.add(produto);
+        filaDeProdutos.add(produto);
+        System.out.println("Produto " + produto.getNome() + " adicionado ao repositório e à fila.");
     }
 
     public Produto buscar(int id) {
@@ -20,36 +23,35 @@ public class ProdutoRepository {
                 return produto;
             }
         }
+        System.out.println("Produto com ID " + id + " não encontrado.");
         return null;
     }
-
+    
     public void atualizar(Produto produto) {
         int index = encontrarIndiceProdutoPorId(produto.getId());
         if (index >= 0) {
             produtos.set(index, produto);
+            atualizarProdutoNaFila(produto); 
+            System.out.println("Produto " + produto.getNome() + " atualizado no repositório e na fila.");
+        } else {
+            System.out.println("Produto com ID " + produto.getId() + " não encontrado para atualização.");
         }
     }
 
     public void remover(int id) {
         int index = encontrarIndiceProdutoPorId(id);
         if (index >= 0) {
-            produtos.remove(index);
+            Produto produtoRemovido = produtos.remove(index);
+            filaDeProdutos.remove(produtoRemovido); 
+            System.out.println("Produto " + produtoRemovido.getNome() + " removido do repositório e da fila.");
+        } else {
+            System.out.println("Produto com ID " + id + " não encontrado para remoção.");
         }
     }
 
     public List<Produto> listarTodos() {
-        return produtos;
+        return new ArrayList<>(produtos); 
     }
-
-    private int encontrarIndiceProdutoPorId(int id) {
-        for (int i = 0; i < produtos.size(); i++) {
-            if (produtos.get(i).getId() == id) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
 
     public void adicionarProdutoNaFila(Produto produto) {
         filaDeProdutos.add(produto);
@@ -90,10 +92,32 @@ public class ProdutoRepository {
     public Produto buscarProdutoNaFila(int id) {
         for (Produto produto : filaDeProdutos) {
             if (produto.getId() == id) {
+                System.out.println("Produto " + produto.getNome() + " encontrado na fila.");
                 return produto;
             }
         }
         System.out.println("Produto com ID " + id + " não encontrado na fila.");
         return null;
+    }
+
+    private int encontrarIndiceProdutoPorId(int id) {
+        for (int i = 0; i < produtos.size(); i++) {
+            if (produtos.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void atualizarProdutoNaFila(Produto produtoAtualizado) {
+        Queue<Produto> novaFila = new LinkedList<>();
+        for (Produto produto : filaDeProdutos) {
+            if (produto.getId() == produtoAtualizado.getId()) {
+                novaFila.add(produtoAtualizado); 
+            } else {
+                novaFila.add(produto); 
+            }
+        }
+        filaDeProdutos = novaFila;
     }
 }

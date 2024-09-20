@@ -13,7 +13,6 @@ public class ClienteService implements IClienteService {
     private StackUtil stackUtil;
     private QueueUtil queueUtil;
 
-    // Construtor atualizado
     public ClienteService(ClienteRepository clienteRepository, StackUtil stackUtil, QueueUtil queueUtil) {
         this.clienteRepository = clienteRepository;
         this.stackUtil = stackUtil;
@@ -98,15 +97,15 @@ public class ClienteService implements IClienteService {
     }
 
     private boolean isValidCnpj(String cnpj) {
-        // Implementação de validação do CNPJ
+       
         if (cnpj == null || cnpj.isEmpty()) {
             return false;
         }
-        // Adicione aqui a lógica real de validação do CNPJ
-        return true; // Placeholder para validação real
+       
+        return true; 
     }
 
-    // Métodos para acessar a pilha e fila (opcional)
+   
     public String verUltimaOperacao() {
         return stackUtil.peek();
     }

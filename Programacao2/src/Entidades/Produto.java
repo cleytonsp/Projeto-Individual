@@ -1,16 +1,17 @@
 package Entidades;
 
 public class Produto {
-    private int id;
+    private static int ultimoId = 0; 
+    
+    protected int id;
     private String nome;
     private double preco;
     private int estoque;
     private Fornecedor fornecedor;
     private EnumProdutoTipo tipo;
 
-    // Construtor com todos os parâmetros
-    public Produto(int id, String nome, double preco, int estoque, Fornecedor fornecedor, EnumProdutoTipo tipo) {
-        this.id = id;
+    public Produto(String nome, double preco, int estoque, Fornecedor fornecedor, EnumProdutoTipo tipo) {
+        this.id = gerarId();
         this.nome = nome;
         this.preco = preco;
         this.estoque = estoque;
@@ -18,13 +19,12 @@ public class Produto {
         this.tipo = tipo;
     }
 
-    // Getters e Setters
-    public int getId() {
-        return id;
+    private static synchronized int gerarId() {
+        return ++ultimoId; 
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
